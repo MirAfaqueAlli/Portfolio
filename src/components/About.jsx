@@ -220,7 +220,7 @@ const About = () => {
         </div>
 
         {/* Massive Animated Background Typography */}
-        <div className="absolute top-[45%] left-0 -translate-y-1/2 w-[250vw] pointer-events-none z-0 opacity-[0.25] flex select-none">
+        <div className="absolute top-[45%] left-0 -translate-y-1/2 w-[250vw] pointer-events-none z-0 opacity-[0.10] sm:opacity-[0.25] flex select-none">
           <h2
             ref={bgTextRef}
             className="text-[20vw] font-display font-black tracking-tighter whitespace-nowrap text-transparent uppercase"
