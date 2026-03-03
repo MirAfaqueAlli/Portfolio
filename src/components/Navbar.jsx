@@ -16,9 +16,9 @@ export default function Navbar() {
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   return (
-    <div className={`fixed top-0 w-full flex justify-center transition-all duration-300 z-50 ${scrolled ? 'pt-2' : 'pt-6'}`}>
-      <nav className={`flex items-center justify-between md:justify-center gap-4 md:gap-12 lg:gap-20 bg-[#010101]/80 backdrop-blur-xl border border-brand-accent/20 p-2 pl-6 rounded-full w-[95%] md:w-max min-w-[300px] shadow-2xl transition-all duration-300 ${scrolled ? 'py-2 px-6' : 'p-2 pl-6'}`}>
-        <a href="/" className="flex items-center gap-2 font-bold text-lg text-white no-underline tracking-tight z-50">
+    <div className={`fixed top-0 w-full flex justify-end md:justify-center transition-all duration-300 z-50 ${scrolled ? 'pt-2 md:pt-2' : 'pt-4 md:pt-6'} px-4 md:px-0 pointer-events-none`}>
+      <nav className={`pointer-events-auto flex items-center justify-between md:justify-center gap-4 md:gap-12 lg:gap-20 bg-transparent md:bg-[#010101]/80 backdrop-blur-none md:backdrop-blur-xl border-none md:border border-brand-accent/20 p-2 md:pl-6 rounded-full w-auto md:w-max shadow-none md:shadow-2xl transition-all duration-300 ${scrolled ? 'md:py-2 md:px-6' : 'md:p-2 md:pl-6'}`}>
+        <a href="/" className="hidden md:flex items-center gap-2 font-bold text-lg text-white no-underline tracking-tight z-50">
           <div className="w-7 h-7 bg-brand-2 text-brand-dark rounded-full flex items-center justify-center font-black text-sm -rotate-12">M</div>
         </a>
         
@@ -53,7 +53,12 @@ export default function Navbar() {
       </nav>
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 bg-[#010101]/95 backdrop-blur-3xl z-40 transition-all duration-500 md:hidden flex flex-col justify-center items-center ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+      <div className={`fixed inset-0 bg-[#010101]/95 backdrop-blur-3xl z-[100] transition-all duration-500 md:hidden flex flex-col justify-center items-center ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+        {/* Close Button Inside Overlay */}
+        <button onClick={closeMobileMenu} className="absolute top-6 right-6 text-white hover:text-brand-2 p-2 z-[110]">
+          <FiX size={32} />
+        </button>
+
         <ul className="flex flex-col gap-8 list-none m-0 p-0 text-2xl font-semibold text-center mt-10">
           <li style={{ transitionDelay: '100ms' }} className={`transition-all duration-500 ${isMobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}><a onClick={closeMobileMenu} href="#home" className="text-white hover:text-brand-2 transition-colors duration-300 block w-full">Home</a></li>
           <li style={{ transitionDelay: '150ms' }} className={`transition-all duration-500 ${isMobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}><a onClick={closeMobileMenu} href="#projects" className="text-white hover:text-brand-2 transition-colors duration-300 block w-full">Projects</a></li>

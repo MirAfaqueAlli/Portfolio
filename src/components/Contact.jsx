@@ -214,7 +214,7 @@ export default function Contact() {
                     <svg className="w-5 h-5 text-brand-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                   </div>
                 </div>
-                <a href="mailto:mirafaquealli9@gmail.com" className="font-display text-xl sm:text-2xl md:text-3xl lg:text-[1.3rem] xl:text-[1.6rem] font-bold text-white break-all hover:text-brand-2 transition-colors">
+                <a href="mailto:mirafaquealli9@gmail.com" className="font-display text-base xs:text-lg sm:text-2xl md:text-3xl lg:text-[1.3rem] xl:text-[1.6rem] font-bold text-white break-all hover:text-brand-2 transition-colors">
                   mirafaquealli9@gmail.com
                 </a>
               </div>

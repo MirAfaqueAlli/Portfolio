@@ -49,7 +49,7 @@ function App() {
       <Navbar />
 
       {/* 3D ID Card - Mobile: top 55vh area | Desktop: full viewport overlay */}
-      <div className="absolute inset-x-0 top-0 z-30 h-[55vh] lg:h-screen w-full overflow-hidden pointer-events-none">
+      <div className="absolute inset-x-0 top-0 z-[40] h-[55vh] lg:h-screen w-full overflow-hidden pointer-events-none">
         <div className="w-full h-full pointer-events-auto">
           <IDCard />
         </div>
