@@ -495,7 +495,7 @@ const ProjectDetails = ({ project, onClose }) => {
             HERO IMAGE CAROUSEL
         ════════════════════════════ */}
         <div className="w-full px-4 md:px-8 lg:px-12 pt-24 md:pt-32 pb-4 flex justify-center">
-          <div className="relative w-full max-w-[1600px] h-[55vh] md:h-[75vh] rounded-[2rem] md:rounded-[3rem] overflow-hidden group shadow-[0_0_80px_rgba(39,202,132,0.1)] border border-white/10 z-20">
+          <div className="relative w-full max-w-[1600px] aspect-video md:aspect-auto h-auto md:h-[75vh] rounded-[2rem] md:rounded-[3rem] overflow-hidden group shadow-[0_0_80px_rgba(39,202,132,0.1)] border border-white/10 z-20">
             <div ref={imageRef} className="absolute inset-0 bg-[#000] z-0 overflow-hidden rounded-[2rem] md:rounded-[3rem]">
               {carouselImages.map((img, idx) => {
                 const isActive = idx === currentImageIndex;

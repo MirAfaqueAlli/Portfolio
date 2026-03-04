@@ -48,9 +48,10 @@ function App() {
       <CustomCursor />
       <Navbar />
 
-      {/* 3D ID Card - Mobile: top 55vh area | Desktop: full viewport overlay */}
-      <div className="absolute inset-x-0 top-0 z-[40] h-[55vh] lg:h-screen w-full overflow-hidden pointer-events-none">
-        <div className="w-full h-full pointer-events-auto">
+      {/* 3D ID Card - Outer wrapper covers full viewport for z-index stacking,
+           inner wrapper keeps original 55vh on mobile so card size stays the same */}
+      <div className="absolute inset-x-0 top-0 z-[40] h-screen w-full pointer-events-none overflow-visible">
+        <div className="w-full h-[55vh] lg:h-full pointer-events-auto overflow-visible">
           <IDCard />
         </div>
       </div>

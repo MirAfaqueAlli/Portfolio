@@ -10,6 +10,7 @@ import { projectsData } from '../data/projectsData';
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
+  const [activeCardIndex, setActiveCardIndex] = useState(null);
   const sectionRef = useRef(null);
   const containerRef = useRef(null);
   const cardsRef = useRef([]);
@@ -36,6 +37,9 @@ const Projects = () => {
           pin: true,
           scrub: 1.5, // Smoother scrubbing
           onUpdate: () => {
+            // Disable heavy calculation on mobile to prevent scrolling lag
+            if (window.innerWidth < 768) return;
+
             const { x, y } = mousePosRef.current;
             if (x === -200 && y === -200) return;
             // Temporarily hide CustomCursor doc layer if it conflicts? No it's pointerEvents: none.
@@ -91,7 +95,7 @@ const Projects = () => {
             z: (i) => -((index - i) * 250), // Push deep into the z-axis
             rotationX: (i) => -((index - i) * 4), // Tilt backwards visually
             opacity: (i) => 1 - ((index - i) * 0.15),
-            filter: (i) => `blur(${(index - i) * 6}px)`,
+            ...(window.innerWidth >= 768 && { filter: (i) => `blur(${(index - i) * 6}px)` }),
             duration: 2.5,
             ease: "expo.inOut"
           }, "+=0.3"); // Pause to let the user admire before the next sweeps in
@@ -134,8 +138,8 @@ const Projects = () => {
     >
       {/* Deep Space Background Glows */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-[50vw] h-[50vw] bg-brand-1/10 rounded-full blur-[160px] opacity-40 mix-blend-screen"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-[60vw] h-[60vw] bg-brand-accent/5 rounded-full blur-[200px] opacity-40 mix-blend-screen"></div>
+        <div className="absolute top-1/4 left-1/4 w-[50vw] h-[50vw] bg-brand-1/10 rounded-full blur-[80px] md:blur-[160px] opacity-40 mix-blend-screen md:mix-blend-screen"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-[60vw] h-[60vw] bg-brand-accent/5 rounded-full blur-[100px] md:blur-[200px] opacity-40 mix-blend-screen md:mix-blend-screen"></div>
       </div>
 
       <div className="absolute top-8 md:top-16 w-full text-center z-0 pointer-events-none">
@@ -156,14 +160,20 @@ const Projects = () => {
             key={project.id}
             ref={el => cardsRef.current[index] = el}
             // CINEMATIC POSTER CARD DESIGN — No generic "left/right" splits
-            className="project-card absolute left-0 right-0 mx-auto w-full max-w-[95vw] lg:max-w-5xl h-[70vh] md:h-[75vh] rounded-[40px] md:rounded-[48px] overflow-hidden group shadow-[0_30px_80px_rgba(0,0,0,0.8)] border border-white/10 bg-[#080808]"
+            className={`project-card absolute left-0 right-0 mx-auto w-full max-w-[92vw] md:max-w-[95vw] lg:max-w-5xl aspect-video md:aspect-auto h-auto md:h-[75vh] rounded-[24px] md:rounded-[48px] overflow-hidden group shadow-2xl md:shadow-[0_30px_80px_rgba(0,0,0,0.8)] border border-white/10 bg-[#020202] ${activeCardIndex === index ? 'is-hovered' : ''}`}
+            onClick={() => {
+              if (window.innerWidth < 768) {
+                setActiveCardIndex(activeCardIndex === index ? null : index);
+              }
+            }}
             style={{
-              zIndex: index + 10,
+               zIndex: index + 10,
+               willChange: "transform, opacity",
               /* Removed transformStyle: 'preserve-3d' as it breaks overflow: hidden */
             }}
           >
             {/* Full Cover Image Background */}
-            <div className="absolute inset-x-0 bottom-0 h-full w-full z-0 overflow-hidden rounded-[40px] md:rounded-[48px]" style={{ WebkitMaskImage: '-webkit-radial-gradient(white, black)' }}>
+            <div className="absolute inset-x-0 bottom-0 h-full w-full z-0 overflow-hidden rounded-[24px] md:rounded-[48px]" style={{ WebkitMaskImage: '-webkit-radial-gradient(white, black)' }}>
               <img
                 src={project.image}
                 alt={project.title}
@@ -175,8 +185,8 @@ const Projects = () => {
             </div>
 
             {/* Big Floating Index (Top Right) */}
-            <div className="absolute top-8 md:top-12 right-8 md:right-12 z-20 overflow-hidden">
-              <span className="block text-white/10 font-display font-black text-5xl md:text-8xl select-none translate-y-full group-hover:translate-y-0 group-[.is-hovered]:translate-y-0 transition-transform duration-[1.2s] ease-out">
+            <div className="absolute top-4 md:top-12 right-6 md:right-12 z-20 overflow-hidden">
+              <span className="block text-white/10 font-display font-black text-3xl md:text-8xl select-none translate-y-full group-hover:translate-y-0 group-[.is-hovered]:translate-y-0 transition-transform duration-[1.2s] ease-out">
                 [{project.index}]
               </span>
             </div>
@@ -192,9 +202,9 @@ const Projects = () => {
             </div>
 
             {/* The "Control Dock" - Floating Glass Information Panel at the bottom */}
-            <div className="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 md:right-8 z-30 transition-all duration-[1.5s] ease-[cubic-bezier(0.19,1,0.22,1)] translate-y-8 opacity-0 group-hover:translate-y-0 group-[.is-hovered]:translate-y-0 group-hover:opacity-100 group-[.is-hovered]:opacity-100">
+            <div className="absolute bottom-3 left-3 right-3 md:bottom-8 md:left-8 md:right-8 z-30 transition-all duration-[1.5s] ease-[cubic-bezier(0.19,1,0.22,1)] translate-y-8 opacity-0 group-hover:translate-y-0 group-[.is-hovered]:translate-y-0 group-hover:opacity-100 group-[.is-hovered]:opacity-100">
 
-              <div className="w-full bg-[#111111]/70 backdrop-blur-3xl border border-white/10 rounded-[24px] md:rounded-[32px] p-5 md:p-8 flex flex-col xl:flex-row items-center justify-between gap-6 shadow-[0_30px_60px_rgba(0,0,0,0.5)] relative overflow-hidden">
+              <div className="w-full bg-[#111111]/90 md:bg-[#111111]/70 backdrop-blur-md md:backdrop-blur-3xl border border-white/10 rounded-[16px] md:rounded-[32px] p-3 md:p-8 flex flex-col xl:flex-row items-center justify-between gap-3 md:gap-6 shadow-xl md:shadow-[0_30px_60px_rgba(0,0,0,0.5)] relative overflow-hidden">
 
                 {/* Glossy inner top-edge highlight */}
                 <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
@@ -208,11 +218,11 @@ const Projects = () => {
                 </div>
 
                 {/* Center: Tech Stack Badges */}
-                <div className="flex-1 min-w-0 w-full flex flex-wrap justify-center gap-2 md:gap-3 my-4 xl:my-0">
+                <div className="flex-1 min-w-0 w-full flex flex-wrap justify-center gap-1 md:gap-3 my-2 md:my-4 xl:my-0">
                   {project.tech.split(',').map(t => (
                     <span
                       key={t}
-                      className="text-white/80 text-[9px] md:text-xs font-sans uppercase tracking-[0.2em] py-2 px-4 md:px-5 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-md hover:bg-white/10 transition-colors cursor-default whitespace-nowrap"
+                      className="text-white/80 text-[8px] md:text-xs font-sans uppercase tracking-[0.2em] py-1.5 px-3 md:py-2 md:px-5 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-md hover:bg-white/10 transition-colors cursor-default whitespace-nowrap"
                     >
                       {t.trim()}
                     </span>
@@ -225,16 +235,18 @@ const Projects = () => {
                     href={project.githubRepo}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex-1 xl:flex-none flex items-center justify-center py-3 md:py-4 px-6 rounded-xl md:rounded-2xl bg-white text-black text-[9px] md:text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-2 hover:text-white transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(45,212,191,0.5)] whitespace-nowrap"
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex-1 xl:flex-none flex items-center justify-center py-2.5 md:py-4 px-4 md:px-6 rounded-[10px] md:rounded-2xl bg-white text-black text-[8px] md:text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-2 hover:text-white transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(45,212,191,0.5)] whitespace-nowrap"
                   >
                     GITHUB
                   </a>
                   <button
                     onClick={(e) => {
                       e.preventDefault();
+                      e.stopPropagation();
                       setSelectedProject(project);
                     }}
-                    className="flex-1 xl:flex-none flex items-center justify-center py-3 md:py-4 px-6 rounded-xl md:rounded-2xl bg-transparent border border-white/20 text-white hover:bg-white/10 text-[9px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 whitespace-nowrap cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] relative z-50"
+                    className="flex-1 xl:flex-none flex items-center justify-center py-2.5 md:py-4 px-4 md:px-6 rounded-[10px] md:rounded-2xl bg-transparent border border-white/20 text-white hover:bg-white/10 text-[8px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 whitespace-nowrap cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] relative z-50"
                   >
                     DETAILS
                   </button>

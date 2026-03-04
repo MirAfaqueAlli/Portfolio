@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 
 /**
@@ -11,10 +11,20 @@ import gsap from 'gsap';
 export default function CustomCursor() {
   const cursorRef = useRef(null);
   const viewRef = useRef(null);
+  
+  const [isTouchDevice, setIsTouchDevice] = useState(
+    typeof window !== 'undefined' ? window.matchMedia('(pointer: coarse)').matches : false
+  );
 
   useEffect(() => {
-    // Only activates on pointer-primary (mouse) devices
-    if (window.matchMedia('(pointer: coarse)').matches) return;
+    const mediaQuery = window.matchMedia('(pointer: coarse)');
+    const handleMediaChange = (e) => setIsTouchDevice(e.matches);
+    mediaQuery.addEventListener('change', handleMediaChange);
+    return () => mediaQuery.removeEventListener('change', handleMediaChange);
+  }, []);
+
+  useEffect(() => {
+    if (isTouchDevice) return;
 
     const cursor = cursorRef.current;
     const view = viewRef.current;
@@ -129,7 +139,9 @@ export default function CustomCursor() {
       document.documentElement.removeEventListener('mouseleave', onLeaveWindow);
       document.documentElement.removeEventListener('mouseenter', onEnterWindow);
     };
-  }, []);
+  }, [isTouchDevice]);
+
+  if (isTouchDevice) return null;
 
   return (
     <>

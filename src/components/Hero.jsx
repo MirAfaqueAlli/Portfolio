@@ -52,7 +52,7 @@ export default function Hero() {
         <div className="gsap-hero-el w-full flex-shrink-0" style={{ height: '55vh' }}></div>
 
         {/* Mobile Text Content */}
-        <div className="relative z-20 flex flex-col items-center text-center px-4 min-[360px]:px-6 md:px-16 pb-12 sm:pb-20">
+        <div className="relative flex flex-col items-center text-center px-4 min-[360px]:px-6 md:px-16 pb-12 sm:pb-20">
           <div className="gsap-hero-el flex items-center gap-3 mb-5 md:mb-8">
             <div className="px-3 py-1 md:px-4 md:py-1.5 rounded-full border border-brand-2/30 bg-brand-2/10 backdrop-blur-md">
               <p className="text-sm font-mono font-semibold text-brand-2 uppercase tracking-widest flex items-center gap-2">

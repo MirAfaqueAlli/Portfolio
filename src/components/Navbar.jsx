@@ -16,7 +16,7 @@ export default function Navbar() {
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   return (
-    <div className={`fixed top-0 w-full flex justify-end md:justify-center transition-all duration-300 z-50 ${scrolled ? 'pt-2 md:pt-2' : 'pt-4 md:pt-6'} px-4 md:px-0 pointer-events-none`}>
+    <div className={`fixed top-0 w-full flex justify-end md:justify-center transition-all duration-300 z-[100] ${scrolled ? 'pt-2 md:pt-2' : 'pt-4 md:pt-6'} px-4 md:px-0 pointer-events-none`}>
       <nav className={`pointer-events-auto flex items-center justify-between md:justify-center gap-4 md:gap-12 lg:gap-20 bg-transparent md:bg-[#010101]/80 backdrop-blur-none md:backdrop-blur-xl border-none md:border border-brand-accent/20 p-2 md:pl-6 rounded-full w-auto md:w-max shadow-none md:shadow-2xl transition-all duration-300 ${scrolled ? 'md:py-2 md:px-6' : 'md:p-2 md:pl-6'}`}>
         <a href="/" className="hidden md:flex items-center gap-2 font-bold text-lg text-white no-underline tracking-tight z-50">
           <div className="w-7 h-7 bg-brand-2 text-brand-dark rounded-full flex items-center justify-center font-black text-sm -rotate-12">M</div>
@@ -43,11 +43,13 @@ export default function Navbar() {
 
           {/* Mobile Menu Toggle Button */}
           <button 
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden text-white hover:text-brand-2 transition-colors p-2"
-            aria-label="Toggle menu"
+            onClick={() => setIsMobileMenuOpen(true)}
+            className={`md:hidden text-white hover:text-brand-2 transition-all p-2 ${
+              isMobileMenuOpen ? 'opacity-0 pointer-events-none scale-75' : 'opacity-100 pointer-events-auto scale-100'
+            }`}
+            aria-label="Open menu"
           >
-            {isMobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+            <FiMenu size={24} />
           </button>
         </div>
       </nav>
