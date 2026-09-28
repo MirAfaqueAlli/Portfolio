@@ -23,7 +23,7 @@ const Skills = () => {
         trigger: containerRef.current, // Pin tracks the main container
         pin: pinRef.current, // But actually pins the inner wrapper to avoid layout jumps
         start: "top top",
-        end: "+=120%", 
+        end: "+=100%", 
         fastScrollEnd: true,
         invalidateOnRefresh: true,
       });
@@ -35,7 +35,7 @@ const Skills = () => {
       const introTl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: 'top 80%',
+          start: 'top 85%',
           toggleActions: 'play none none reverse',
         }
       });
@@ -62,10 +62,10 @@ const Skills = () => {
           scale: 1,
           opacity: 1,
           filter: "blur(0px)",
-          duration: 2.5,
-          ease: "expo.out",
+          duration: 0.9,
+          ease: "power3.out",
           stagger: {
-            amount: 1.2,
+            amount: 0.3,
             from: "random"
           }
         }
@@ -75,7 +75,7 @@ const Skills = () => {
       const outroTl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: 'top -80%', // Triggers when the user scrolls near the end of the pinned distance
+          start: 'top -50%', // Triggers earlier when user scrolls past
           toggleActions: 'play none none reverse',
         }
       });
@@ -90,11 +90,11 @@ const Skills = () => {
         scale: "random(2, 6)", // huge chunks flying past
         opacity: 0,
         filter: "blur(40px)",
-        duration: 2.0,
-        ease: "power3.inOut",
+        duration: 0.7,
+        ease: "power2.inOut",
         overwrite: "auto",
         stagger: {
-          amount: 0.8,
+          amount: 0.2,
           from: "center"
         }
       });

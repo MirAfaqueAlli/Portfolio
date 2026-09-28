@@ -242,8 +242,11 @@ const Achievements = () => {
                       {/* CTA button */}
                       <a
                         href={item.link}
-                        target="_blank"
+                        target={item.link && item.link !== '#' ? "_blank" : undefined}
                         rel="noreferrer"
+                        onClick={(e) => {
+                          if (item.link === '#') e.preventDefault();
+                        }}
                         className="inline-flex items-center gap-2 text-[9px] sm:text-[10px] md:text-xs font-black tracking-[0.15em] sm:tracking-[0.2em] font-mono uppercase text-white hover:text-white transition-colors group/link px-4 sm:px-5 py-2 sm:py-2.5 rounded-full border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 overflow-hidden relative w-fit"
                       >
                         <span className="absolute inset-0 bg-white/5 opacity-0 group-hover/link:opacity-100 transition-opacity"></span>

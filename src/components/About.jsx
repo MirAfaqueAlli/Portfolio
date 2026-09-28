@@ -337,14 +337,14 @@ const About = () => {
             {/* Stats & Social Row */}
             <div ref={statsRef} className="mt-8 sm:mt-10 lg:mt-16 flex flex-wrap items-center gap-6 sm:gap-8 lg:gap-12">
               <div className="group cursor-pointer opacity-0 translate-y-6">
-                <div className="text-3xl sm:text-4xl font-display font-black text-white group-hover:text-brand-2 transition-colors duration-300">5<span className="text-brand-accent">+</span></div>
+                <div className="text-3xl sm:text-4xl font-display font-black text-white group-hover:text-brand-2 transition-colors duration-300">7<span className="text-brand-accent">+</span></div>
                 <div className="text-[10px] sm:text-xs font-sans tracking-[0.2em] text-white/65 uppercase mt-1 sm:mt-2">Projects</div>
               </div>
 
               <div className="w-px h-10 sm:h-12 bg-white/10 opacity-0 translate-y-6"></div>
 
               <div className="group cursor-pointer opacity-0 translate-y-6">
-                <div className="text-3xl sm:text-4xl font-display font-black text-white group-hover:text-brand-2 transition-colors duration-300">10<span className="text-brand-accent">+</span></div>
+                <div className="text-3xl sm:text-4xl font-display font-black text-white group-hover:text-brand-2 transition-colors duration-300">20<span className="text-brand-accent">+</span></div>
                 <div className="text-[10px] sm:text-xs font-sans tracking-[0.2em] text-white/65 uppercase mt-1 sm:mt-2">Repositories</div>
               </div>
 

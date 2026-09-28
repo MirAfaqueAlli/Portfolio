@@ -231,15 +231,37 @@ const Projects = () => {
 
                 {/* Right: Action Buttons */}
                 <div className="flex gap-2 md:gap-4 w-full xl:w-min justify-center xl:justify-end shrink-0">
-                  <a
-                    href={project.githubRepo}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="flex-1 xl:flex-none flex items-center justify-center py-2.5 md:py-4 px-4 md:px-6 rounded-[10px] md:rounded-2xl bg-white text-black text-[8px] md:text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-2 hover:text-white transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(45,212,191,0.5)] whitespace-nowrap"
-                  >
-                    GITHUB
-                  </a>
+                  {project.liveUrl ? (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="flex-1 xl:flex-none flex items-center justify-center py-2.5 md:py-4 px-4 md:px-6 rounded-[10px] md:rounded-2xl bg-white text-black text-[8px] md:text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-2 hover:text-white transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(45,212,191,0.5)] whitespace-nowrap"
+                    >
+                      VISIT
+                    </a>
+                  ) : (project.githubRepo && project.githubRepo !== '#') ? (
+                    <a
+                      href={project.githubRepo}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="flex-1 xl:flex-none flex items-center justify-center py-2.5 md:py-4 px-4 md:px-6 rounded-[10px] md:rounded-2xl bg-white text-black text-[8px] md:text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-2 hover:text-white transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(45,212,191,0.5)] whitespace-nowrap"
+                    >
+                      GITHUB
+                    </a>
+                  ) : (project.moreInfo && project.moreInfo !== '#') ? (
+                    <a
+                      href={project.moreInfo}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="flex-1 xl:flex-none flex items-center justify-center py-2.5 md:py-4 px-4 md:px-6 rounded-[10px] md:rounded-2xl bg-white text-black text-[8px] md:text-xs font-bold tracking-[0.2em] uppercase hover:bg-brand-2 hover:text-white transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(45,212,191,0.5)] whitespace-nowrap"
+                    >
+                      VISIT
+                    </a>
+                  ) : null}
                   <button
                     onClick={(e) => {
                       e.preventDefault();

@@ -196,7 +196,7 @@ const ProjectDetails = ({ project, onClose }) => {
 
   const carouselImages = project.images?.length > 0
     ? project.images
-    : [project.image, project.image, project.image];
+    : (project.image ? [project.image] : []);
 
   const techList = project.tech
     ? project.tech.split(',').map(t => t.trim()).filter(Boolean)
@@ -561,6 +561,11 @@ const ProjectDetails = ({ project, onClose }) => {
             >
               {project.title}
             </h1>
+            {project.subtitle && (
+              <p className="text-sm md:text-xl text-brand-2/80 font-mono mt-3 tracking-wide">
+                {project.subtitle}
+              </p>
+            )}
           </div>
 
           <div ref={statsRef} className="flex flex-wrap gap-6 md:gap-10 border-t border-white/8 pt-6">
@@ -645,9 +650,13 @@ const ProjectDetails = ({ project, onClose }) => {
                     <div className="vision-line absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#27CA84] via-[#27CA84]/40 to-transparent" />
                     <div className="absolute -left-[5px] top-0 w-2 h-2 rounded-full bg-[#27CA84] shadow-[0_0_12px_#27CA84]" />
                     <p className="vision-para text-lg md:text-2xl xl:text-3xl text-white/50 font-sans font-light leading-relaxed tracking-tight">
-                      This project was born from the desire to create a{' '}
-                      <span className="text-white font-semibold bg-white/5 px-2 py-0.5 rounded">truly unique digital experience</span>{' '}
-                      — pushing aesthetic boundaries while maintaining flawless, purposeful engineering that sets a new standard.
+                      {project.description || (
+                        <>
+                          This project was born from the desire to create a{' '}
+                          <span className="text-white font-semibold bg-white/5 px-2 py-0.5 rounded">truly unique digital experience</span>{' '}
+                          — pushing aesthetic boundaries while maintaining flawless, purposeful engineering that sets a new standard.
+                        </>
+                      )}
                     </p>
                   </div>
                 </div>
@@ -723,7 +732,7 @@ const ProjectDetails = ({ project, onClose }) => {
                   {/* Body */}
                   <div className="relative z-10 mt-auto border-l-2 border-white/10 group-hover:border-[#27CA84]/40 transition-colors duration-700 pl-6 py-2">
                     <p className="text-white/35 group-hover:text-white/60 text-base md:text-lg leading-relaxed transition-colors duration-700 font-light">
-                      Navigating the technical complexity of integrating multiple systems — achieving fluid, zero-latency visuals despite heavyweight background data processing and demanding real-time interactions.
+                      {project.challenge || 'Navigating the technical complexity of integrating multiple systems — achieving fluid, zero-latency visuals despite heavyweight background data processing and demanding real-time interactions.'}
                     </p>
                   </div>
                 </div>
@@ -763,9 +772,13 @@ const ProjectDetails = ({ project, onClose }) => {
                   {/* Body */}
                   <div className="relative z-10 mt-auto border-l-2 border-white/10 group-hover:border-[#27CA84]/40 transition-colors duration-700 pl-6 py-2">
                     <p className="text-white/35 group-hover:text-white/60 text-base md:text-lg leading-relaxed transition-colors duration-700 font-light">
-                      Meticulous optimisation through cutting-edge technologies — hardware-accelerated animations, deeply considered architecture, and a striking UI that brings both{' '}
-                      <span className="text-white font-semibold bg-white/5 px-2 py-0.5 rounded">award-winning aesthetics</span>{' '}
-                      and bulletproof functionality to life.
+                      {project.solution || (
+                        <>
+                          Meticulous optimisation through cutting-edge technologies — hardware-accelerated animations, deeply considered architecture, and a striking UI that brings both{' '}
+                          <span className="text-white font-semibold bg-white/5 px-2 py-0.5 rounded">award-winning aesthetics</span>{' '}
+                          and bulletproof functionality to life.
+                        </>
+                      )}
                     </p>
                   </div>
                 </div>
@@ -783,63 +796,65 @@ const ProjectDetails = ({ project, onClose }) => {
             <div ref={ctaRef} className="flex flex-col md:flex-row gap-5 md:gap-6 w-full">
 
               {/* GitHub — Slash-wipe + glowing border trace */}
-              <a
-                href={project.githubRepo}
-                target="_blank" rel="noreferrer"
-                className={`magnetic-btn group relative overflow-hidden rounded-[1.75rem] transition-all duration-700 ${(project.moreInfo && project.moreInfo !== '#') ? 'flex-1' : 'w-full md:max-w-[600px] mx-auto'}`}
-                style={{
-                  background: '#0d0d0d',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  boxShadow: '0 0 0 0 rgba(39,202,132,0)',
-                  transition: 'background-color 0.4s ease, border-color 0.4s ease',
-                }}
-                onMouseMove={handleMagnet}
-                onMouseLeave={handleMagnetLeave}
-                onMouseEnter={e => {
-                  e.currentTarget.style.backgroundColor = 'rgba(39,202,132,0.1)';
-                  e.currentTarget.style.borderColor = 'rgba(39,202,132,0.4)';
-                }}
-              >
-                <div className="relative z-10 flex items-center justify-between p-8 md:p-10">
-                  <div className="flex flex-col gap-3">
-                    {/* Code bracket badge — slides in on hover */}
-                    <div className="flex items-center gap-2 overflow-hidden">
-                      <span
-                        className="font-mono text-[10px] text-white/25 uppercase tracking-[0.3em] transition-colors duration-500 group-hover:text-[#27CA84]/70"
-                      >Repository</span>
-                      <span
-                        className="font-mono text-[10px] text-[#27CA84] bg-[#27CA84]/10 border border-[#27CA84]/20 px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-all duration-500"
-                        style={{ transform: 'translateX(20px)', transition: 'opacity 0.4s 0.2s, transform 0.4s 0.2s' }}
-                        ref={el => {
-                          if (!el) return;
-                          const a = el.closest('a');
-                          const show = () => { el.style.opacity = '1'; el.style.transform = 'translateX(0)'; };
-                          const hide = () => { el.style.opacity = '0'; el.style.transform = 'translateX(20px)'; };
-                          a.addEventListener('mouseenter', show);
-                          a.addEventListener('mouseleave', hide);
-                        }}
-                      >&lt;/&gt;</span>
+              {(project.githubRepo && project.githubRepo !== '#') && (
+                <a
+                  href={project.githubRepo}
+                  target="_blank" rel="noreferrer"
+                  className={`magnetic-btn group relative overflow-hidden rounded-[1.75rem] transition-all duration-700 ${(project.liveUrl || (project.moreInfo && project.moreInfo !== '#')) ? 'flex-1' : 'w-full md:max-w-[600px] mx-auto'}`}
+                  style={{
+                    background: '#0d0d0d',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    boxShadow: '0 0 0 0 rgba(39,202,132,0)',
+                    transition: 'background-color 0.4s ease, border-color 0.4s ease',
+                  }}
+                  onMouseMove={handleMagnet}
+                  onMouseLeave={handleMagnetLeave}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.backgroundColor = 'rgba(39,202,132,0.1)';
+                    e.currentTarget.style.borderColor = 'rgba(39,202,132,0.4)';
+                  }}
+                >
+                  <div className="relative z-10 flex items-center justify-between p-8 md:p-10">
+                    <div className="flex flex-col gap-3">
+                      {/* Code bracket badge — slides in on hover */}
+                      <div className="flex items-center gap-2 overflow-hidden">
+                        <span
+                          className="font-mono text-[10px] text-white/25 uppercase tracking-[0.3em] transition-colors duration-500 group-hover:text-[#27CA84]/70"
+                        >Repository</span>
+                        <span
+                          className="font-mono text-[10px] text-[#27CA84] bg-[#27CA84]/10 border border-[#27CA84]/20 px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-all duration-500"
+                          style={{ transform: 'translateX(20px)', transition: 'opacity 0.4s 0.2s, transform 0.4s 0.2s' }}
+                          ref={el => {
+                            if (!el) return;
+                            const a = el.closest('a');
+                            const show = () => { el.style.opacity = '1'; el.style.transform = 'translateX(0)'; };
+                            const hide = () => { el.style.opacity = '0'; el.style.transform = 'translateX(20px)'; };
+                            a.addEventListener('mouseenter', show);
+                            a.addEventListener('mouseleave', hide);
+                          }}
+                        >&lt;/&gt;</span>
+                      </div>
+                      <span className="text-2xl md:text-3xl font-display font-bold text-white leading-tight tracking-tight">
+                        Review<br />Source Code
+                      </span>
                     </div>
-                    <span className="text-2xl md:text-3xl font-display font-bold text-white leading-tight tracking-tight">
-                      Review<br />Source Code
-                    </span>
-                  </div>
 
-                  {/* Icon: GitHub mark */}
-                  <div className="relative w-14 h-14 flex-shrink-0">
-                    <div className="absolute inset-0 flex items-center justify-center rounded-full border border-white/15 bg-white/5 group-hover:bg-[#27CA84] group-hover:border-[#27CA84] transition-all duration-400">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-white group-hover:text-black transition-colors duration-400" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-                      </svg>
+                    {/* Icon: GitHub mark */}
+                    <div className="relative w-14 h-14 flex-shrink-0">
+                      <div className="absolute inset-0 flex items-center justify-center rounded-full border border-white/15 bg-white/5 group-hover:bg-[#27CA84] group-hover:border-[#27CA84] transition-all duration-400">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-white group-hover:text-black transition-colors duration-400" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </a>
+                </a>
+              )}
 
               {/* Live Project */}
-              {(project.moreInfo && project.moreInfo !== '#') && (
+              {(project.liveUrl || (project.moreInfo && project.moreInfo !== '#')) && (
                 <a
-                  href={project.moreInfo}
+                  href={project.liveUrl || project.moreInfo}
                   target="_blank" rel="noreferrer"
                   className={`magnetic-btn group relative overflow-hidden rounded-[1.75rem] transition-all duration-700 ${(project.githubRepo && project.githubRepo !== '#') ? 'flex-1' : 'w-full md:max-w-[600px] mx-auto'}`}
                   style={{
